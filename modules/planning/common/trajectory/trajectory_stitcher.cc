@@ -88,6 +88,10 @@ void TrajectoryStitcher::TransformLastPublishedTrajectory(const double x_diff,
 // if 1. the auto-driving mode is off or
 //    2. we don't have the trajectory from last planning cycle or
 //    3. the position deviation from actual and target is too high
+// 根据当前车辆状态进行规划：
+// 如果 1. 自动驾驶模式关闭，或者
+//    2. 我们没有上一个规划周期的轨迹，或者
+//    3. 实际位置与目标位置的偏差过大
 std::vector<TrajectoryPoint> TrajectoryStitcher::ComputeStitchingTrajectory(
     const VehicleState& vehicle_state, const double current_timestamp,
     const double planning_cycle_time,

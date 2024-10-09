@@ -33,41 +33,49 @@ using apollo::common::TrajectoryPoint;
 using apollo::common::VehicleStateProvider;
 
 RTKReplayPlanner::RTKReplayPlanner() {
+  // 构造函数，初始化 RTKReplayPlanner 类的实例。
+  // 从指定的文件中读取轨迹数据，文件名由 FLAGS_rtk_trajectory_filename 提供。
   ReadTrajectoryFile(FLAGS_rtk_trajectory_filename);
 }
+
 
 Status RTKReplayPlanner::Init(const PlanningConfig&) { return Status::OK(); }
 
 Status RTKReplayPlanner::Plan(const TrajectoryPoint& planning_start_point,
                               Frame* frame) {
-  auto status = Status::OK();
-  bool has_plan = false;
+  auto status = Status::OK();  // 初始化状态为 OK
+  bool has_plan = false;  // 标志位，指示是否成功规划
+
+  // 查找是否存在变道路径
   auto it = std::find_if(
       frame->reference_line_info().begin(), frame->reference_line_info().end(),
       [](const ReferenceLineInfo& ref) { return ref.IsChangeLanePath(); });
+  
+  // 如果找到变道路径，进行规划
   if (it != frame->reference_line_info().end()) {
     status = PlanOnReferenceLine(planning_start_point, frame, &(*it));
     has_plan = (it->IsDrivable() && it->IsChangeLanePath() &&
                 it->TrajectoryLength() > FLAGS_change_lane_min_length);
     if (!has_plan) {
-      AERROR << "Fail to plan for lane change.";
+      AERROR << "Fail to plan for lane change.";  // 记录错误信息
     }
   }
 
+  // 如果未成功规划或不优先考虑变道，规划其他路径
   if (!has_plan || !FLAGS_prioritize_change_lane) {
     for (auto& reference_line_info : frame->reference_line_info()) {
       if (reference_line_info.IsChangeLanePath()) {
-        continue;
+        continue;  // 跳过变道路径
       }
       status = PlanOnReferenceLine(planning_start_point, frame,
                                    &reference_line_info);
       if (status != Status::OK()) {
         AERROR << "planner failed to make a driving plan for: "
-               << reference_line_info.Lanes().Id();
+               << reference_line_info.Lanes().Id();  // 记录错误信息
       }
     }
   }
-  return status;
+  return status;  // 返回规划状态
 }
 
 Status RTKReplayPlanner::PlanOnReferenceLine(

@@ -46,6 +46,12 @@ namespace control {
  * @brief control module main class, it processes localization, chasiss, and
  * pad data to compute throttle, brake and steer values.
  */
+
+/**
+ * @class Control
+ *
+ * @brief 控制模块的主类，用于处理定位、底盘和控制板数据，以计算油门、刹车和转向值。
+ */
 class Control : public apollo::common::ApolloApp {
   friend class ControlTestBase;
 

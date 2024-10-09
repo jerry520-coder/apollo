@@ -39,6 +39,12 @@ namespace planning {
  *        outputs proper segment of the trajectory according to vehicle
  * position.
  */
+
+/**
+ * @class RTKReplayPlanner
+ * @brief RTKReplayPlanner 是 Planner 的派生类。
+ *        它从轨迹文件中读取记录的轨迹，并根据车辆位置输出相应的轨迹段。
+ */
 class RTKReplayPlanner : public Planner {
  public:
   /**

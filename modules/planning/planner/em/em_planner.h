@@ -46,6 +46,10 @@ namespace planning {
  * @brief EMPlanner is an expectation maximization planner.
  */
 
+/**
+ * @class EMPlanner
+ * @brief EMPlanner 是一种期望最大化规划器。
+ */
 class EMPlanner : public Planner {
  public:
   /**
@@ -66,6 +70,13 @@ class EMPlanner : public Planner {
    * @param frame Current planning frame.
    * @return OK if planning succeeds; error otherwise.
    */
+
+    /**
+   * @brief 重写父类 Planner 中的函数 Plan。
+   * @param planning_init_point 规划开始的轨迹点。
+   * @param frame 当前的规划框架。
+   * @return 如果规划成功则返回 OK；否则返回错误。
+   */
   apollo::common::Status Plan(
       const common::TrajectoryPoint& planning_init_point,
       Frame* frame) override;
@@ -76,6 +87,14 @@ class EMPlanner : public Planner {
    * @param frame Current planning frame.
    * @param reference_line_info The computed reference line.
    * @return OK if planning succeeds; error otherwise.
+   */
+
+    /**
+   * @brief 重写父类 Planner 中的函数 Plan。
+   * @param planning_init_point 规划开始的轨迹点。
+   * @param frame 当前的规划框架。
+   * @param reference_line_info 计算得到的参考线信息。
+   * @return 如果规划成功则返回 OK；否则返回错误。
    */
   common::Status PlanOnReferenceLine(
       const common::TrajectoryPoint& planning_init_point, Frame* frame,

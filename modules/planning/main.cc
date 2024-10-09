@@ -17,4 +17,6 @@
 #include "modules/common/apollo_app.h"
 #include "modules/planning/planning.h"
 
+// 将 apollo::planning::Planning 类作为主程序的上下文
+// 确保在程序启动时完成必要的初始化工作，例如设置日志记录、加载配置等。
 APOLLO_MAIN(apollo::planning::Planning)

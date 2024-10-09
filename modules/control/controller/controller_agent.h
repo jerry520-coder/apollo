@@ -47,12 +47,24 @@ namespace control {
  *
  * @brief manage all controllers declared in control config file.
  */
+
+/**
+ * @class ControllerAgent
+ *
+ * @brief 管理控制配置文件中声明的所有控制器。
+ */
 class ControllerAgent {
  public:
   /**
    * @brief initialize ControllerAgent
    * @param control_conf control configurations
    * @return Status initialization status
+   */
+
+    /**
+   * @brief 初始化控制器代理
+   * @param control_conf 控制配置
+   * @return Status 初始化状态
    */
   common::Status Init(const ControlConf *control_conf);
 
@@ -65,6 +77,15 @@ class ControllerAgent {
    * @param cmd control command
    * @return Status computation status
    */
+
+    /**
+   * @brief 根据当前车辆状态和目标轨迹计算控制命令
+   * @param localization 车辆位置
+   * @param chassis 车辆状态，例如速度、加速度
+   * @param trajectory 由规划生成的轨迹
+   * @param cmd 控制命令
+   * @return Status 计算状态
+   */
   common::Status ComputeControlCommand(
       const localization::LocalizationEstimate *localization,
       const canbus::Chassis *chassis, const planning::ADCTrajectory *trajectory,
@@ -74,6 +95,11 @@ class ControllerAgent {
    * @brief reset ControllerAgent
    * @return Status reset status
    */
+
+    /**
+   * @brief 重置控制器代理
+   * @return Status 重置状态
+   */
   common::Status Reset();
 
  private:
@@ -81,6 +107,12 @@ class ControllerAgent {
    * @brief
    * Register new controllers. If you need to add a new type of controller,
    * You should first register your controller in this function.
+   */
+
+    /**
+   * @brief
+   * 注册新的控制器。如果需要添加一种新的控制器类型，
+   * 应该首先在此函数中注册你的控制器。
    */
   void RegisterControllers(const ControlConf *control_conf);
 

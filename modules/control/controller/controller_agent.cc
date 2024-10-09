@@ -33,25 +33,32 @@ using apollo::common::Status;
 using apollo::common::time::Clock;
 
 void ControllerAgent::RegisterControllers(const ControlConf *control_conf) {
+  // 输出当前只支持MPC控制器或横向和纵向控制器的信息
   AINFO << "Only support MPC controller or Lat + Lon controllers as of now";
+
+  // 遍历配置中激活的控制器
   for (auto active_controller : control_conf->active_controllers()) {
     switch (active_controller) {
       case ControlConf::MPC_CONTROLLER:
+        // 注册MPC控制器
         controller_factory_.Register(
             ControlConf::MPC_CONTROLLER,
             []() -> Controller * { return new MPCController(); });
         break;
       case ControlConf::LAT_CONTROLLER:
+        // 注册横向控制器
         controller_factory_.Register(
             ControlConf::LAT_CONTROLLER,
             []() -> Controller * { return new LatController(); });
         break;
       case ControlConf::LON_CONTROLLER:
+        // 注册纵向控制器
         controller_factory_.Register(
             ControlConf::LON_CONTROLLER,
             []() -> Controller * { return new LonController(); });
         break;
       default:
+        // 如果控制器类型未知，输出错误信息
         AERROR << "Unknown active controller type:" << active_controller;
     }
   }
@@ -100,17 +107,31 @@ Status ControllerAgent::ComputeControlCommand(
     const localization::LocalizationEstimate *localization,
     const canbus::Chassis *chassis, const planning::ADCTrajectory *trajectory,
     control::ControlCommand *cmd) {
+  // 遍历控制器列表，依次处理每个控制器
   for (auto &controller : controller_list_) {
     ADEBUG << "controller:" << controller->Name() << " processing ...";
+
+    // 记录控制器计算开始时间
     double start_timestamp = Clock::NowInSeconds();
+
+    // 调用控制器计算控制命令
     controller->ComputeControlCommand(localization, chassis, trajectory, cmd);
+
+    // 记录控制器计算结束时间
     double end_timestamp = Clock::NowInSeconds();
+
+    // 计算控制命令计算所需的时间（毫秒）
     const double time_diff_ms = (end_timestamp - start_timestamp) * 1000;
 
+    // 输出当前控制器的计算时间
     ADEBUG << "controller: " << controller->Name()
            << " calculation time is: " << time_diff_ms << " ms.";
+
+    // 将当前控制器的计算时间添加到延迟统计信息中
     cmd->mutable_latency_stats()->add_controller_time_ms(time_diff_ms);
   }
+
+  // 返回成功状态
   return Status::OK();
 }
 

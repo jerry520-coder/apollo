@@ -80,6 +80,10 @@ class Planning : public apollo::common::ApolloApp {
    * @brief main logic of the planning module, runs periodically triggered by
    * timer.
    */
+
+  /**
+ * @brief 规划模块的主要逻辑，由定时器周期性触发运行。
+ */
   void RunOnce();
 
   /**
@@ -88,7 +92,7 @@ class Planning : public apollo::common::ApolloApp {
   void SetLastPublishableTrajectory(const ADCTrajectory& adc_trajectory);
 
  private:
-  // Watch dog timer
+  // Watch dog timer  // 看门狗定时器
   void OnTimer(const ros::TimerEvent&);
 
   void PublishPlanningPb(ADCTrajectory* trajectory_pb, double timestamp);
@@ -123,7 +127,7 @@ class Planning : public apollo::common::ApolloApp {
   void SetFallbackCruiseTrajectory(ADCTrajectory* cruise_trajectory);
 
   /**
-   * Reset pull over mode whenever received new routing
+   * Reset pull over mode whenever received new routing //每当接收到新的路线时，重置停车模式。
    */
   void ResetPullOver(const routing::RoutingResponse& response);
 

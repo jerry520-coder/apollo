@@ -40,6 +40,13 @@ namespace common {
  * can either be an OK status for success, or a failure status with error
  * message and error code enum.
 */
+
+/**
+ * @class Status
+ *
+ * @brief 一个用于表示API调用返回状态的通用类。
+ * 它可以是成功的OK状态，也可以是带有错误消息和错误代码枚举的失败状态。
+ */
 class Status {
  public:
   /**

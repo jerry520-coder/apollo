@@ -38,6 +38,11 @@ namespace planning {
  * @class LocalPath
  * @brief LocalPath is used to privide some path point operations for decider
  */
+
+/**
+ * @class LocalPath
+ * @brief LocalPath 用于为决策模块提供一些路径点操作。
+ */
 class LocalPath {
  public:
   LocalPath() = default;

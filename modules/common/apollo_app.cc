@@ -54,33 +54,46 @@ void ApolloApp::ExportFlags() const {
 }
 
 int ApolloApp::Spin() {
+  // 初始化应用程序，获取状态
   auto status = Init();
   if (!status.ok()) {
+    // 如果初始化失败，记录错误并返回-1
     AERROR << Name() << " Init failed: " << status;
     return -1;
   }
 
   std::unique_ptr<ros::AsyncSpinner> spinner;
+  // 如果需要多个回调线程，则创建AsyncSpinner
   if (callback_thread_num_ > 1) {
     spinner = std::unique_ptr<ros::AsyncSpinner>(
         new ros::AsyncSpinner(callback_thread_num_));
   }
 
+  // 启动应用程序，获取状态
   status = Start();
   if (!status.ok()) {
+    // 如果启动失败，记录错误并返回-2
     AERROR << Name() << " Start failed: " << status;
     return -2;
   }
+
+  // 导出当前标志设置
   ExportFlags();
+  
+  // 启动异步线程或调用ros::spin()进行阻塞等待
   if (spinner) {
     spinner->start();
   } else {
     ros::spin();
   }
+
+  // 等待ROS系统关闭
   ros::waitForShutdown();
+  
+  // 停止应用程序
   Stop();
-  AINFO << Name() << " exited.";
-  return 0;
+  AINFO << Name() << " exited."; // 记录退出信息
+  return 0; // 返回0表示正常退出
 }
 
 void apollo_app_sigint_handler(int signal_num) {

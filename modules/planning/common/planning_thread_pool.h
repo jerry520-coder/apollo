@@ -37,6 +37,11 @@ namespace planning {
  * @brief A singleton class that contains thread pool for planning
  */
 
+/**
+ * @class PlanningThreadPool
+ *
+ * @brief PlanningThreadPool 是一个单例类，包含用于规划的线程池。
+ */
 class PlanningThreadPool {
  public:
   void Init();

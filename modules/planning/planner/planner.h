@@ -35,6 +35,12 @@ namespace planning {
  *        It contains a pure virtual function Plan which must be implemented in
  * derived class.
  */
+
+/**
+ * @class Planner
+ * @brief Planner 是一个具体规划器的基类。
+ *        它包含一个纯虚函数 Plan，该函数必须在派生类中实现。
+ */
 class Planner {
  public:
   /**
@@ -55,6 +61,13 @@ class Planner {
    * @param frame Current planning frame.
    * @return OK if planning succeeds; error otherwise.
    */
+
+   /**
+ * @brief 计算执行轨迹。
+ * @param planning_init_point 规划开始的轨迹点。
+ * @param frame 当前规划帧。
+ * @return 如果规划成功则返回OK；否则返回错误。
+ */
   virtual apollo::common::Status Plan(
       const common::TrajectoryPoint& planning_init_point, Frame* frame) = 0;
 
@@ -65,6 +78,14 @@ class Planner {
    * @param reference_line_info The computed reference line.
    * @return OK if planning succeeds; error otherwise.
    */
+
+  /**
+ * @brief 计算执行轨迹。
+ * @param planning_init_point 规划开始的轨迹点。
+ * @param frame 当前规划帧。
+ * @param reference_line_info 计算得到的参考线。
+ * @return 如果规划成功则返回OK；否则返回错误。
+ */
   virtual apollo::common::Status PlanOnReferenceLine(
       const common::TrajectoryPoint& planning_init_point, Frame* frame,
       ReferenceLineInfo* reference_line_info) = 0;

@@ -55,6 +55,13 @@ namespace planning {
  * mode by setting "FLAGS_use_navigation_mode" to "true") and do not use it in
  * standard mode.
  */
+
+/**
+ * @class NaviPlanner
+ * @brief NaviPlanner 是一种基于实时相对地图的规划器。它使用车辆的 FLU（前左上）坐标系来完成巡航、跟随、超车、轻推、变道和停车等任务。
+ * 注意，NaviPlanner 仅在导航模式下使用（通过将 "FLAGS_use_navigation_mode" 设置为 "true" 来开启导航模式），
+ * 不要在标准模式下使用它。
+ */
 class NaviPlanner : public Planner {
  public:
   NaviPlanner() = default;
@@ -69,6 +76,13 @@ class NaviPlanner : public Planner {
    * @param frame Current planning frame.
    * @return OK if planning succeeds; error otherwise.
    */
+
+  /**
+ * @brief 重写父类 Planner 中的 Plan 函数。
+ * @param planning_init_point 规划开始时的轨迹点。
+ * @param frame 当前的规划帧。
+ * @return 如果规划成功返回 OK；否则返回错误状态。
+ */
   common::Status Plan(const common::TrajectoryPoint& planning_init_point,
                       Frame* frame) override;
 
@@ -79,6 +93,14 @@ class NaviPlanner : public Planner {
    * @param reference_line_info The computed reference line.
    * @return OK if planning succeeds; error otherwise.
    */
+
+  /**
+ * @brief 重写父类 Planner 中的 Plan 函数。
+ * @param planning_init_point 规划开始时的轨迹点。
+ * @param frame 当前的规划帧。
+ * @param reference_line_info 计算得到的参考线信息。
+ * @return 如果规划成功返回 OK；否则返回错误状态。
+ */
   common::Status PlanOnReferenceLine(
       const common::TrajectoryPoint& planning_init_point, Frame* frame,
       ReferenceLineInfo* reference_line_info) override;

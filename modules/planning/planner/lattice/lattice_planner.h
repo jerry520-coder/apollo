@@ -48,6 +48,13 @@ class LatticePlanner : public Planner {
    * @param frame Current planning frame.
    * @return OK if planning succeeds; error otherwise.
    */
+
+    /**
+   * @brief 重写父类Planner中的Plan函数。
+   * @param planning_init_point 规划开始的轨迹点。
+   * @param frame 当前的规划帧。
+   * @return 如果规划成功返回OK；否则返回错误状态。
+   */
   common::Status Plan(const common::TrajectoryPoint& planning_init_point,
                       Frame* frame) override;
 
@@ -57,6 +64,14 @@ class LatticePlanner : public Planner {
    * @param frame Current planning frame.
    * @param reference_line_info The computed reference line.
    * @return OK if planning succeeds; error otherwise.
+   */
+
+    /**
+   * @brief 重写父类Planner中的Plan函数。
+   * @param planning_init_point 规划开始的轨迹点。
+   * @param frame 当前的规划帧。
+   * @param reference_line_info 计算出的参考线信息。
+   * @return 如果规划成功返回OK；否则返回错误状态。
    */
   common::Status PlanOnReferenceLine(
       const common::TrajectoryPoint& planning_init_point, Frame* frame,
